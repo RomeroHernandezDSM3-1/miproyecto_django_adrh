@@ -1,7 +1,14 @@
-# models: trae las herramientas de Django para describir tablas como clases
-from django.db import models
-# User: el modelo de usuario que Django ya trae incluido (login, contraseñas, sesiones)
-from django.contrib.auth.models import User
+# render: ya estaba desde la Semana 3; junta una plantilla con datos y devuelve la página
+from django.shortcuts import render
+# Servicio: NUEVO — el modelo del paso 02, importado desde este mismo directorio (el punto = "esta app")
+from .models import Servicio
+
+# servicios: la vista que responde en /servicios/
+def servicios(request):
+    # .objects.all(): pide TODOS los servicios a MySQL (Django lo traduce a SELECT * FROM core_servicio)
+    lista_servicios = Servicio.objects.all()
+    # entrega la lista a la plantilla con el nombre "servicios", igual que en la Semana 3
+    return render(request, 'core/servicios.html', {'servicios': lista_servicios})
 
 # class Servicio: se convierte en la tabla "core_servicio" dentro de MySQL
 class Servicio(models.Model):
